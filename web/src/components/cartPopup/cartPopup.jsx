@@ -1,5 +1,6 @@
 import "./cartPopup.css";
-import {useCart} from "../../hooks/useCart";
+import { useCart } from "../../hooks/useCart";
+import { useEffect } from "react";
 
 const CartPopup = ({ onClose }) => {
     const { cartItems, clearCart } = useCart();
@@ -10,6 +11,16 @@ const CartPopup = ({ onClose }) => {
         alert("Pedido finalizado com sucesso!");
         clearCart();
     };
+
+    useEffect(() => {
+        // Desabilita o scroll da página quando o popup for aberto
+        document.body.style.overflow = "hidden";
+
+        // Restaura o scroll da página quando o popup for fechado
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
 
     return (
         <div className="cart-overlay" onClick={onClose}>

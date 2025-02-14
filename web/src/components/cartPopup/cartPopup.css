@@ -13,18 +13,22 @@
     z-index: 999;
 }
 
+/* Estilo do popup de carrinho */
 .popup {
     background: white;
-    position:absolute;
+    position: absolute;
     top: 13vh;
-    width:calc(60% - 4vw);
-    height: auto;
+    width: calc(60% - 4vw);
+    max-height: 80vh; /* Limita a altura máxima para o popup */
     right: 20%;
     padding: 2vw;
-
-
+    overflow: hidden; /* Impede que o conteúdo transborde fora do carrinho */
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
 }
 
+/* Cabeçalho do carrinho */
 .cart-header {
     display: flex;
     justify-content: space-between;
@@ -34,8 +38,11 @@
     color: #777;
 }
 
+/* Contêiner dos itens do carrinho */
 .cart-items {
     margin-top: 15px;
+    overflow-y: auto; /* Permite o scroll interno */
+    max-height: calc(80vh - 150px); /* Altura dinâmica para rolagem, considerando cabeçalho e rodapé */
 }
 
 .cart-item {
@@ -76,6 +83,7 @@
     font-weight: bold;
 }
 
+/* Rodapé do carrinho */
 .cart-footer {
     display: flex;
     justify-content: space-between;
