@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #191920; /* Cor escura de fundo */
+}
+
+.container {
+    width: 60%; /* Define a largura do conteúdo */
+    height: 100%;
+    margin: 0 auto; /* Garante centralização */
+}
+
