@@ -1,31 +1,36 @@
-import { useState } from "react";
-import "./productCard.css";
+import React, { useState } from "react";
+import { View, Text, Image, Button, StyleSheet, TextInput } from "react-native";
 
-const ProductCard = ({ product, onAddToCart }) => {
-    const [quantity, setQuantity] = useState(1);
+const ProductCard = ({ product }) => {
+  const [quantity, setQuantity] = useState(1);
 
-    const handleQuantityChange = (event) => {
-        const value = Math.max(1, parseInt(event.target.value, 10) || 1);
-        setQuantity(value);
-    };
+  const handleQuantityChange = (value) => {
+    setQuantity(Math.max(1, parseInt(value, 10) || 1));
+  };
 
-    return (
-        <div className="product-card">
-            <img src={product.image} alt={product.name} className="product-image" />
-            <div className="product-info">
-                <h3 className="product-name">{product.name}</h3>
-                <p className="product-price">
-                    R${Number(product.price).toFixed(2)}
-                </p>
-            </div>
-            <div className="product-actions">
-                <button className="add-to-cart" onClick={() => onAddToCart(product, 1)}>
-                    <span className="quantity-value">1</span>
-                    <span className="cart-text">ADICIONAR AO CARRINHO</span>
-                </button>
-            </div>
-        </div>
-    );
+  const handleAddToCart = () => {
+    console.log(`Produto ${product.name} adicionado ao carrinho! Quantidade: ${quantity}`);
+  };
+
+  return (
+    <View style={styles.card}>
+      <Image source={{ uri: product.image }} style={styles.productImage} />
+      <View style={styles.productInfo}>
+        <Text style={styles.productName}>{product.name}</Text>
+        <Text style={styles.productPrice}>R${product.price.toFixed(2)}</Text>
+      </View>
+      <View style={styles.productActions}>
+        <TextInput
+          style={styles.quantityInput}
+          value={String(quantity)}
+          onChangeText={handleQuantityChange}
+          keyboardType="numeric"
+        />
+        <Button title="Adicionar ao Carrinho" onPress={handleAddToCart} />
+      </View>
+    </View>
+  );
 };
+
 
 export default ProductCard;

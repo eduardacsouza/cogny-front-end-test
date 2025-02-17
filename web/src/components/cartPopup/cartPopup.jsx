@@ -12,16 +12,6 @@ const CartPopup = ({ onClose }) => {
         clearCart();
     };
 
-    useEffect(() => {
-        // Desabilita o scroll da página quando o popup for aberto
-        document.body.style.overflow = "hidden";
-
-        // Restaura o scroll da página quando o popup for fechado
-        return () => {
-            document.body.style.overflow = "auto";
-        };
-    }, []);
-
     return (
         <div className="cart-overlay" onClick={onClose}>
             <div className="popup" onClick={(e) => e.stopPropagation()}>

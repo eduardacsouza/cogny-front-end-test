@@ -1,34 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { db } from "../../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import React from "react";
+import { View, FlatList, StyleSheet, ActivityIndicator, Text } from "react-native";
 import ProductCard from "../productCard/productCard";
-import "./productList.css";
-import {useCart} from "../../hooks/useCart";
+import useProducts from "../hooks/useProducts"; // Importa o hook
 
 const ProductList = () => {
-    const [products, setProducts] = useState([]);
-    const { addToCart } = useCart();
+  const { products, loading, error } = useProducts();
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            const querySnapshot = await getDocs(collection(db, "products"));
-            const productList = querySnapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-            setProducts(productList);
-        };
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
 
-        fetchProducts();
-    }, []);
+  if (error) {
+    return <Text>{error}</Text>;
+  }
 
-    return (
-        <div className="product-list">
-            {products.map((product) => (
-                <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
-            ))}
-        </div>
-    );
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={products}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <ProductCard key={item.id} product={item} />
+        )}
+      />
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+  },
+});
 
 export default ProductList;
